@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yuval and Amit - Pre Wedding Party!</title>
   <style>
     html, body {
@@ -16,31 +15,31 @@
       background-size: contain;
       background-color: #fff;
       height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     .container {
       position: absolute;
-      top: 65vh;
+      top: 52vh; /* ⬅️ ממקם את הטופס באמצע החלק הלבן */
       width: 100%;
       display: flex;
       justify-content: center;
     }
 
     form {
-      background-color: rgba(255, 255, 255, 0.96);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      max-width: 280px;
-      width: 90%;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 14px 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 240px;
+      width: 85%;
     }
 
     input, select, button {
       padding: 10px;
       margin: 10px 0;
       width: 100%;
-      font-size: 16px;
+      font-size: 15px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
@@ -56,11 +55,11 @@
     }
 
     .spinner {
-      margin: 20px auto;
-      width: 40px;
-      height: 40px;
-      border: 5px solid #ccc;
-      border-top: 5px solid #3498db;
+      margin: 15px auto;
+      width: 30px;
+      height: 30px;
+      border: 4px solid #ccc;
+      border-top: 4px solid #3498db;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       display: none;
@@ -72,7 +71,8 @@
     }
 
     #responseMsg {
-      margin-top: 20px;
+      margin-top: 12px;
+      font-size: 14px;
       font-weight: bold;
     }
 
@@ -84,11 +84,16 @@
 
     @media (max-width: 600px) {
       .container {
-        top: 68vh;
+        top: 54vh;
       }
 
       form {
-        padding: 16px;
+        max-width: 230px;
+        padding: 12px 14px;
+      }
+
+      input, select, button {
+        font-size: 14px;
       }
     }
   </style>
@@ -97,7 +102,7 @@
 
   <div class="container">
     <form id="rsvpForm">
-      <input type="text" id="name" name="name" placeholder="השם שלך" required>
+      <input type="text" id="name" name="name" placeholder="השם שלך" required />
 
       <select id="attendance" name="attendance" required>
         <option value="">מגיע/ה?</option>
@@ -107,7 +112,7 @@
       </select>
 
       <div id="extra">
-        <input type="number" id="guests" name="guests" placeholder="כמה אנשים כולל אותך?" min="1">
+        <input type="number" id="guests" name="guests" placeholder="כמה אנשים כולל אותך?" min="1" />
       </div>
 
       <button type="submit">שליחה</button>
