@@ -11,8 +11,8 @@
       direction: rtl;
       font-family: 'Arial', sans-serif;
       text-align: center;
-      background: url('invitation.png') no-repeat center top;
-      background-size: contain;
+      background: url('invitation.png') no-repeat center center;
+      background-size: cover; /* ⬅️ ימלא את כל המסך */
       background-color: #fff;
       height: 100vh;
       overflow: hidden;
@@ -20,26 +20,26 @@
 
     .container {
       position: absolute;
-      top: 52vh; /* ⬅️ ממקם את הטופס באמצע החלק הלבן */
+      top: 78vh; /* ⬅️ יושב נמוך בתוך החלק הלבן */
       width: 100%;
       display: flex;
       justify-content: center;
     }
 
     form {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 14px 16px;
+      background-color: rgba(255, 255, 255, 0.94);
+      padding: 12px 14px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 240px;
-      width: 85%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      max-width: 220px;
+      width: 80%;
     }
 
     input, select, button {
-      padding: 10px;
-      margin: 10px 0;
+      padding: 8px;
+      margin: 8px 0;
       width: 100%;
-      font-size: 15px;
+      font-size: 14px;
       border-radius: 6px;
       border: 1px solid #ccc;
     }
@@ -72,7 +72,7 @@
 
     #responseMsg {
       margin-top: 12px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
     }
 
@@ -84,16 +84,16 @@
 
     @media (max-width: 600px) {
       .container {
-        top: 54vh;
+        top: 80vh;
       }
 
       form {
-        max-width: 230px;
-        padding: 12px 14px;
+        max-width: 210px;
+        padding: 10px 12px;
       }
 
       input, select, button {
-        font-size: 14px;
+        font-size: 13px;
       }
     }
   </style>
@@ -103,18 +103,15 @@
   <div class="container">
     <form id="rsvpForm">
       <input type="text" id="name" name="name" placeholder="השם שלך" required />
-
       <select id="attendance" name="attendance" required>
         <option value="">מגיע/ה?</option>
         <option value="מגיע/ה">מגיע/ה</option>
         <option value="לא מגיע/ה">לא מגיע/ה</option>
         <option value="אולי">אולי</option>
       </select>
-
       <div id="extra">
         <input type="number" id="guests" name="guests" placeholder="כמה אנשים כולל אותך?" min="1" />
       </div>
-
       <button type="submit">שליחה</button>
       <div id="spinner" class="spinner"></div>
       <p id="responseMsg"></p>
