@@ -85,9 +85,9 @@
     <p>נשמח שתגיע!</p>
 
     <form id="rsvpForm">
-      <input type="text" id="name" placeholder="השם שלך" required>
+      <input type="text" id="name" name="name" placeholder="השם שלך" required>
 
-      <select id="attendance" required>
+      <select id="attendance" name="attendance" required>
         <option value="">מגיע/ה?</option>
         <option value="מגיע/ה">מגיע/ה</option>
         <option value="לא מגיע/ה">לא מגיע/ה</option>
@@ -95,7 +95,7 @@
       </select>
 
       <div id="extra">
-        <input type="number" id="guests" placeholder="כמה אנשים כולל אותך?" min="1">
+        <input type="number" id="guests" name="guests" placeholder="כמה אנשים כולל אותך?" min="1">
       </div>
 
       <button type="submit">שליחה</button>
@@ -123,16 +123,15 @@
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const data = {
-        name: document.getElementById('name').value,
-        attendance: attendance.value,
-        guests: attendance.value === 'מגיע/ה' ? document.getElementById('guests').value : ''
-      };
+
+      const formData = new FormData();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('attendance', attendance.value);
+      formData.append('guests', attendance.value === 'מגיע/ה' ? document.getElementById('guests').value : '');
 
       fetch(scriptURL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: formData
       })
       .then(response => response.text())
       .then(text => {
