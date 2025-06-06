@@ -4,36 +4,80 @@
   <meta charset="UTF-8">
   <title>הזמנה לאירוע</title>
   <style>
-    body { font-family: Arial; text-align: center; padding: 20px; direction: rtl; }
-    input, select, button { padding: 10px; margin: 10px; width: 80%; max-width: 300px; }
-    #extra { display: none; }
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      text-align: center;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    form {
+      margin-top: 30px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 10px auto;
+      width: 80%;
+      max-width: 320px;
+      display: block;
+      font-size: 16px;
+    }
+
+    #extra {
+      display: none;
+    }
+
+    #responseMsg {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    a {
+      color: green;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+
   <h1>✨ ההזמנה לאירוע של נועה ורן ✨</h1>
-  <p>20 ביולי 2025, 19:00, אולמי נרניה</p>
+  <p>📅 20 ביולי 2025</p>
+  <p>🕖 שעה 19:00</p>
+  <p>📍 אולמי נרניה</p>
   <p>נשמח לראותך!</p>
 
   <form id="rsvpForm">
-    <input type="text" id="name" placeholder="השם שלך" required><br>
+    <input type="text" id="name" placeholder="השם שלך" required>
 
     <select id="attendance" required>
       <option value="">מגיע/ה?</option>
       <option value="מגיע/ה">מגיע/ה</option>
       <option value="לא מגיע/ה">לא מגיע/ה</option>
-    </select><br>
+      <option value="אולי">אולי</option>
+    </select>
 
     <div id="extra">
       <input type="number" id="guests" placeholder="כמה אנשים כולל אותך?" min="1">
     </div>
 
-    <button type="submit">שלח</button>
+    <button type="submit">שליחה</button>
   </form>
 
   <p id="responseMsg"></p>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwgKIe2rFWoLf4Hk004DAt3sla5Puo6HJe7sGV2tJARk7Mt2C6PxOv8gx3rHcgf71sl/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbygfiOyB4g89xL7H-1-fiUgogHJd8zD_5JdaEPf64ZxZC3xkU8zqsirihdO_vJQSTDnGA/exec';
     const form = document.getElementById('rsvpForm');
     const msg = document.getElementById('responseMsg');
     const attendance = document.getElementById('attendance');
@@ -56,8 +100,12 @@
         attendance: attendance.value,
         guests: attendance.value === 'מגיע/ה' ? document.getElementById('guests').value : ''
       };
+
       fetch(scriptURL, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
       })
       .then(response => {
