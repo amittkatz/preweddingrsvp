@@ -105,49 +105,57 @@
   </div>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxt5TXMnqIAHopdTTjcjuQaCpqz45I6aSMjhL3nMbCcLx1WilwOsGwmuIkZWPMoYrKGbQ/exec';
-    const form = document.getElementById('rsvpForm');
-    const msg = document.getElementById('responseMsg');
-    const attendance = document.getElementById('attendance');
-    const extra = document.getElementById('extra');
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxt5TXMnqIAHopdTTjcjuQaCpqz45I6aSMjhL3nMbCcLx1WilwOsGwmuIkZWPMoYrKGbQ/exec';
+  const form = document.getElementById('rsvpForm');
+  const msg = document.getElementById('responseMsg');
+  const attendance = document.getElementById('attendance');
+  const extra = document.getElementById('extra');
 
-    attendance.addEventListener('change', () => {
-      if (attendance.value === 'מגיע/ה') {
-        extra.style.display = 'block';
-        document.getElementById('guests').required = true;
-      } else {
-        extra.style.display = 'none';
-        document.getElementById('guests').required = false;
-      }
-    });
+  attendance.addEventListener('change', () => {
+    if (attendance.value === 'מגיע/ה') {
+      extra.style.display = 'block';
+      document.getElementById('guests').required = true;
+    } else {
+      extra.style.display = 'none';
+      document.getElementById('guests').required = false;
+    }
+  });
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
+  form.addEventListener('submit', e => {
+    e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('name', document.getElementById('name').value);
-      formData.append('attendance', attendance.value);
-      formData.append('guests', attendance.value === 'מגיע/ה' ? document.getElementById('guests').value : '');
+    const name = document.getElementById('name').value;
+    const att = attendance.value;
+    const guests = att === 'מגיע/ה' ? document.getElementById('guests').value : '';
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.text())
-      .then(text => {
-        if (text.trim() === 'OK') {
-          msg.innerHTML = "✅ תודה! נשמר בהצלחה<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
-          form.reset();
-          extra.style.display = 'none';
-        } else {
-          msg.textContent = "שגיאה בשליחה ❌ (השרת החזיר: " + text + ")";
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('attendance', att);
+    formData.append('guests', guests);
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(text => {
+      if (text.trim() === 'OK') {
+        let message = "✅ תודה! נשמר בהצלחה";
+        if (att === 'מגיע/ה') {
+          message += "<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
         }
-      })
-      .catch(error => {
-        msg.textContent = "שגיאה בשליחה ❌";
-      });
+        msg.innerHTML = message;
+        form.reset();
+        extra.style.display = 'none';
+      } else {
+        msg.textContent = "שגיאה בשליחה ❌ (השרת החזיר: " + text + ")";
+      }
+    })
+    .catch(error => {
+      msg.textContent = "שגיאה בשליחה ❌";
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
