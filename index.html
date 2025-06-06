@@ -2,23 +2,39 @@
 <html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>הזמנה לאירוע</title>
+  <title>Yuval and Amit - Pre Wedding Party</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
       direction: rtl;
       text-align: center;
+      color: #fff;
+      padding: 50px 20px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 40px;
-      background-color: #f9f9f9;
+      border-radius: 20px;
+      max-width: 500px;
+      margin: auto;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       margin-bottom: 10px;
     }
 
+    h2 {
+      font-size: 24px;
+      margin: 5px 0;
+    }
+
     p {
-      margin: 8px 0;
+      font-size: 18px;
+      margin: 10px 0;
     }
 
     form {
@@ -28,10 +44,18 @@
     input, select, button {
       padding: 10px;
       margin: 10px auto;
-      width: 80%;
-      max-width: 320px;
+      width: 90%;
+      max-width: 300px;
       display: block;
       font-size: 16px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background-color: #00a8a8;
+      color: white;
+      cursor: pointer;
     }
 
     #extra {
@@ -44,40 +68,44 @@
     }
 
     a {
-      color: green;
+      color: #ffd700;
+      font-weight: bold;
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h1>✨ ההזמנה לאירוע של נועה ורן ✨</h1>
-  <p>📅 20 ביולי 2025</p>
-  <p>🕖 שעה 19:00</p>
-  <p>📍 אולמי נרניה</p>
-  <p>נשמח לראותך!</p>
+  <div class="container">
+    <h1>You're invited to</h1>
+    <h1>Yuval and Amit</h1>
+    <h2>Pre wedding party</h2>
+    <p>📅 8.8 | 🕐 13:00 | 📍 Gan Yavne</p>
+    <p>🏛️ Greek Pool Party</p>
+    <p>נשמח שתגיע!</p>
 
-  <form id="rsvpForm">
-    <input type="text" id="name" placeholder="השם שלך" required>
+    <form id="rsvpForm">
+      <input type="text" id="name" placeholder="השם שלך" required>
 
-    <select id="attendance" required>
-      <option value="">מגיע/ה?</option>
-      <option value="מגיע/ה">מגיע/ה</option>
-      <option value="לא מגיע/ה">לא מגיע/ה</option>
-      <option value="אולי">אולי</option>
-    </select>
+      <select id="attendance" required>
+        <option value="">מגיע/ה?</option>
+        <option value="מגיע/ה">מגיע/ה</option>
+        <option value="לא מגיע/ה">לא מגיע/ה</option>
+        <option value="אולי">אולי</option>
+      </select>
 
-    <div id="extra">
-      <input type="number" id="guests" placeholder="כמה אנשים כולל אותך?" min="1">
-    </div>
+      <div id="extra">
+        <input type="number" id="guests" placeholder="כמה אנשים כולל אותך?" min="1">
+      </div>
 
-    <button type="submit">שליחה</button>
-  </form>
+      <button type="submit">שליחה</button>
+    </form>
 
-  <p id="responseMsg"></p>
+    <p id="responseMsg"></p>
+  </div>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbygfiOyB4g89xL7H-1-fiUgogHJd8zD_5JdaEPf64ZxZC3xkU8zqsirihdO_vJQSTDnGA/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyFZJEV7qg5DXaQL1gPZ3tnVLgba-CzIVXf_pBFlZ1_omX7TxF7zq6SjXofxQKtGMvKbg/exec';
     const form = document.getElementById('rsvpForm');
     const msg = document.getElementById('responseMsg');
     const attendance = document.getElementById('attendance');
@@ -103,20 +131,24 @@
 
       fetch(scriptURL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
-      .then(response => {
-        msg.innerHTML = "✅ תודה! נשמר בהצלחה<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
-        form.reset();
-        extra.style.display = 'none';
+      .then(response => response.text())
+      .then(text => {
+        if (text.trim() === 'OK') {
+          msg.innerHTML = "✅ תודה! נשמר בהצלחה<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
+          form.reset();
+          extra.style.display = 'none';
+        } else {
+          msg.textContent = "שגיאה בשליחה ❌ (השרת החזיר: " + text + ")";
+        }
       })
       .catch(error => {
         msg.textContent = "שגיאה בשליחה ❌";
       });
     });
   </script>
+
 </body>
 </html>
