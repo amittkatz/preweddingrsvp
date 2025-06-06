@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuval and Amit - Pre Wedding Party!</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background: url('invitation.png') no-repeat center top;
+      background-size: contain;
+      background-color: #fff;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: absolute;
+      top: 65vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.96);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 280px;
+      width: 90%;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #2b3a67;
+      color: white;
+      cursor: pointer;
+    }
+
+    #extra {
+      display: none;
+    }
+
+    .spinner {
+      margin: 20px auto;
+      width: 40px;
+      height: 40px;
+      border: 5px solid #ccc;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #responseMsg {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    a {
+      color: #2b3a67;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        top: 68vh;
+      }
+
+      form {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="rsvpForm">
+      <input type="text" id="name" name="name" placeholder="השם שלך" required>
+
+      <select id="attendance" name="attendance" required>
+        <option value="">מגיע/ה?</option>
+        <option value="מגיע/ה">מגיע/ה</option>
+        <option value="לא מגיע/ה">לא מגיע/ה</option>
+        <option value="אולי">אולי</option>
+      </select>
+
+      <div id="extra">
+        <input type="number" id="guests" name="guests" placeholder="כמה אנשים כולל אותך?" min="1">
+      </div>
+
+      <button type="submit">שליחה</button>
+      <div id="spinner" class="spinner"></div>
+      <p id="responseMsg"></p>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxt5TXMnqIAHopdTTjcjuQaCpqz45I6aSMjhL3nMbCcLx1WilwOsGwmuIkZWPMoYrKGbQ/exec';
+    const form = document.getElementById('rsvpForm');
+    const msg = document.getElementById('responseMsg');
+    const spinner = document.getElementById('spinner');
+    const attendance = document.getElementById('attendance');
+    const extra = document.getElementById('extra');
+
+    attendance.addEventListener('change', () => {
+      if (attendance.value === 'מגיע/ה') {
+        extra.style.display = 'block';
+        document.getElementById('guests').required = true;
+      } else {
+        extra.style.display = 'none';
+        document.getElementById('guests').required = false;
+      }
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const att = attendance.value;
+      const guests = att === 'מגיע/ה' ? document.getElementById('guests').value : '';
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('attendance', att);
+      formData.append('guests', guests);
+
+      spinner.style.display = 'block';
+      msg.textContent = '';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(text => {
+        spinner.style.display = 'none';
+        if (text.trim() === 'OK') {
+          let message = "✅ תודה! נשמר בהצלחה";
+          if (att === 'מגיע/ה') {
+            message += "<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
+          }
+          msg.innerHTML = message;
+          form.reset();
+          extra.style.display = 'none';
+        } else {
+          msg.textContent = "שגיאה בשליחה ❌ (השרת החזיר: " + text + ")";
+        }
+      })
+      .catch(error => {
+        spinner.style.display = 'none';
+        msg.textContent = "שגיאה בשליחה ❌";
+      });
+    });
+  </script>
+
+</body>
+</html>
