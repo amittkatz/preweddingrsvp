@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Yuval and Amit - Pre Wedding Party!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     html, body {
       margin: 0;
@@ -13,37 +13,37 @@
       direction: rtl;
       font-family: 'Arial', sans-serif;
       text-align: center;
-      background: url('08082025.png') no-repeat center center;
-      background-size: cover;
-      background-color: #fff;
+      background: url('08082025.png') no-repeat center top;
+      background-size: contain;
+      background-color: #ffffff;
     }
 
     .container {
       display: flex;
       flex-direction: column;
-      justify-content: center; /* ⬅️ מרכז אנכית במקום להצמיד למטה */
+      justify-content: flex-end;
       align-items: center;
-      height: 100%;
-      padding-top: 190px; /* ⬅️ מוסיף מרווח מלמעלה */
+      min-height: 100%;
+      padding: 20px 10px 60px;
     }
 
     form {
       background-color: rgba(255, 255, 255, 0.95);
-      padding: 20px 30px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 90%;
+      max-width: 350px;
+      width: 100%;
+      margin-top: 20px;
     }
 
     input, select, button {
       padding: 10px;
-      margin: 10px auto;
+      margin: 10px 0;
       width: 100%;
       font-size: 16px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      display: block;
     }
 
     button {
@@ -82,10 +82,30 @@
       text-decoration: underline;
       font-weight: bold;
     }
+
+    @media (max-width: 600px) {
+      body {
+        background-size: contain;
+        background-position: top center;
+      }
+
+      form {
+        padding: 16px;
+        margin-top: 20px;
+      }
+
+      input, select, button {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 20px 10px 60px;
+      }
+    }
   </style>
 </head>
-<body>
 
+<body>
   <div class="container">
     <form id="rsvpForm">
       <input type="text" id="name" name="name" placeholder="השם שלך" required>
@@ -165,6 +185,5 @@
       });
     });
   </script>
-
 </body>
 </html>
