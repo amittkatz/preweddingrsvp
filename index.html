@@ -1,59 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="he">
 <head>
   <meta charset="UTF-8">
   <title>Yuval and Amit - Pre Wedding Party!</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       direction: rtl;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      color: #fff;
-      padding: 50px 20px;
+      background: url('08082025.png') no-repeat center center;
+      background-size: contain;
+      background-color: #fff;
     }
 
     .container {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin: 5px 0;
-    }
-
-    p {
-      font-size: 18px;
-      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100%;
+      padding-bottom: 40px;
     }
 
     form {
-      margin-top: 30px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
     }
 
     input, select, button {
       padding: 10px;
       margin: 10px auto;
-      width: 90%;
-      max-width: 300px;
-      display: block;
+      width: 100%;
       font-size: 16px;
-      border-radius: 8px;
-      border: none;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      display: block;
     }
 
     button {
-      background-color: #00a8a8;
+      background-color: #2b3a67;
       color: white;
       cursor: pointer;
     }
@@ -62,23 +55,12 @@
       display: none;
     }
 
-    #responseMsg {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    a {
-      color: #ffd700;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-  
     .spinner {
       margin: 20px auto;
       width: 40px;
       height: 40px;
       border: 5px solid #ccc;
-      border-top: 5px solid #3498db; /* כחול */
+      border-top: 5px solid #3498db;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       display: none;
@@ -89,18 +71,21 @@
       100% { transform: rotate(360deg); }
     }
 
+    #responseMsg {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    a {
+      color: #2b3a67;
+      text-decoration: underline;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>You're invited to</h1>
-    <h1>Yuval and Amit</h1>
-    <h2>Pre wedding party</h2>
-    <p>📅 8.8 | 🕐 13:00 | 📍 Gan Yavne</p>
-    <p>🏛️ Greek Pool Party</p>
-    <p>נשמח שתגיע!</p>
-
     <form id="rsvpForm">
       <input type="text" id="name" name="name" placeholder="השם שלך" required>
 
@@ -116,10 +101,9 @@
       </div>
 
       <button type="submit">שליחה</button>
+      <div id="spinner" class="spinner"></div>
+      <p id="responseMsg"></p>
     </form>
-
-    <p id="responseMsg"></p>
-    <div id="spinner" class="spinner"></div>
   </div>
 
   <script>
@@ -129,7 +113,7 @@
     const spinner = document.getElementById('spinner');
     const attendance = document.getElementById('attendance');
     const extra = document.getElementById('extra');
-  
+
     attendance.addEventListener('change', () => {
       if (attendance.value === 'מגיע/ה') {
         extra.style.display = 'block';
@@ -139,23 +123,22 @@
         document.getElementById('guests').required = false;
       }
     });
-  
+
     form.addEventListener('submit', e => {
       e.preventDefault();
-  
+
       const name = document.getElementById('name').value;
       const att = attendance.value;
       const guests = att === 'מגיע/ה' ? document.getElementById('guests').value : '';
-  
+
       const formData = new FormData();
       formData.append('name', name);
       formData.append('attendance', att);
       formData.append('guests', guests);
-  
-      // הצג את הספינר והנקה את ההודעה
+
       spinner.style.display = 'block';
       msg.textContent = '';
-  
+
       fetch(scriptURL, {
         method: 'POST',
         body: formData
@@ -180,6 +163,7 @@
         msg.textContent = "שגיאה בשליחה ❌";
       });
     });
-</script>
+  </script>
+
 </body>
 </html>
