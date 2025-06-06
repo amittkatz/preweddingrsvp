@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>הזמנה לאירוע</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 20px; direction: rtl; }
+    input, select, button { padding: 10px; margin: 10px; width: 80%; max-width: 300px; }
+    #extra { display: none; }
+  </style>
+</head>
+<body>
+  <h1>✨ ההזמנה לאירוע של נועה ורן ✨</h1>
+  <p>20 ביולי 2025, 19:00, אולמי נרניה</p>
+  <p>נשמח לראותך!</p>
+
+  <form id="rsvpForm">
+    <input type="text" id="name" placeholder="השם שלך" required><br>
+
+    <select id="attendance" required>
+      <option value="">מגיע/ה?</option>
+      <option value="מגיע/ה">מגיע/ה</option>
+      <option value="לא מגיע/ה">לא מגיע/ה</option>
+    </select><br>
+
+    <div id="extra">
+      <input type="number" id="guests" placeholder="כמה אנשים כולל אותך?" min="1">
+    </div>
+
+    <button type="submit">שלח</button>
+  </form>
+
+  <p id="responseMsg"></p>
+
+  <script>
+    const scriptURL = '*** הדבק כאן את כתובת ה-Web App שלך ***';
+    const form = document.getElementById('rsvpForm');
+    const msg = document.getElementById('responseMsg');
+    const attendance = document.getElementById('attendance');
+    const extra = document.getElementById('extra');
+
+    attendance.addEventListener('change', () => {
+      if (attendance.value === 'מגיע/ה') {
+        extra.style.display = 'block';
+        document.getElementById('guests').required = true;
+      } else {
+        extra.style.display = 'none';
+        document.getElementById('guests').required = false;
+      }
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        attendance: attendance.value,
+        guests: attendance.value === 'מגיע/ה' ? document.getElementById('guests').value : ''
+      };
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        msg.innerHTML = "✅ תודה! נשמר בהצלחה<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
+        form.reset();
+        extra.style.display = 'none';
+      })
+      .catch(error => {
+        msg.textContent = "שגיאה בשליחה ❌";
+      });
+    });
+  </script>
+</body>
+</html>
