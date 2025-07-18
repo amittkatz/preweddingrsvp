@@ -3,43 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yuval and Amit - Pre Wedding Party!</title>
+  <title>Amit & Yuval - Pre Wedding RSVP</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       direction: rtl;
       font-family: 'Arial', sans-serif;
-      text-align: center;
-      background: url('preweddingbackground.png') no-repeat center center;
+      background: url('pre.png') no-repeat center top;
       background-size: cover;
       background-attachment: fixed;
-      background-color: #ffffff;
       min-height: 100vh;
     }
 
-    .container {
-      position: absolute;
-      top: 80vh;
-      width: 100%;
+    .overlay {
       display: flex;
       justify-content: center;
+      margin-top: 60vh; /* Position just after "Gan Yavne" visually */
     }
 
     form {
-      background-color: rgba(255, 255, 255, 0.94);
-      padding: 12px 14px;
+      background-color: rgba(255, 255, 255, 0.92);
+      padding: 16px;
       border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      max-width: 220px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 300px;
       width: 80%;
     }
 
     input, select, button {
-      padding: 8px;
+      padding: 10px;
       margin: 8px 0;
       width: 100%;
-      font-size: 14px;
+      font-size: 15px;
       border-radius: 6px;
       border: 1px solid #ccc;
       box-sizing: border-box;
@@ -48,6 +44,7 @@
     button {
       background-color: #2b3a67;
       color: white;
+      font-weight: bold;
       cursor: pointer;
     }
 
@@ -75,6 +72,7 @@
       margin-top: 12px;
       font-size: 13px;
       font-weight: bold;
+      text-align: center;
     }
 
     a {
@@ -84,24 +82,23 @@
     }
 
     @media (max-width: 600px) {
-      .container {
-        top: 63vh;
+      .overlay {
+        margin-top: 70vh;
       }
 
       form {
-        max-width: 210px;
-        padding: 10px 12px;
+        max-width: 90%;
       }
 
       input, select, button {
-        font-size: 13px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="overlay">
     <form id="rsvpForm">
       <input type="text" id="name" name="name" placeholder="השם שלך" required />
       <select id="attendance" name="attendance" required>
@@ -162,7 +159,7 @@
         if (text.trim() === 'OK') {
           let message = "✅ תודה! נשמר בהצלחה";
           if (att === 'מגיע/ה') {
-            message += "<br><br><a href='https://payboxapp.page.link/your-group-link' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
+            message += "<br><br><a href='https://link.payboxapp.com/G68D56EvdQ8YY3Sf7' target='_blank'>להצטרפות לקבוצת התשלום בפייבוקס</a>";
           }
           msg.innerHTML = message;
           form.reset();
