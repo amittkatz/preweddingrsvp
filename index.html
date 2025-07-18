@@ -13,7 +13,7 @@
       direction: rtl;
       font-family: 'Arial', sans-serif;
       text-align: center;
-      background: url('invitation.png') no-repeat center center;
+      background: url('pre.png') no-repeat center center;
       background-size: contain; /* default for desktop */
       background-color: #ffffff;
     }
@@ -24,10 +24,16 @@
         background-size: cover;
       }
     }
+     /* Desktop only: form starts at 60% height */
+    @media (min-width: 768px) {
+      .form-wrapper {
+        top: 60%;
+      }
+    }
 
     .form-wrapper {
       position: absolute;
-      top: 72%;
+      top: 65%;
       width: 100%;
       display: flex;
       justify-content: center;
