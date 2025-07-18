@@ -8,30 +8,33 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100dvh; /* ✅ fixes iOS full screen issue */
-      width: 100vw;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
       direction: rtl;
       font-family: 'Arial', sans-serif;
       text-align: center;
       background: url('prewedd.png') no-repeat center center;
-      background-size: cover; /* ✅ fills screen better on mobile */
+      background-size: contain; /* ✅ desktop default: full image visible */
       background-color: #ffffff;
-      background-attachment: fixed; /* ✅ prevents scroll effect */
     }
-
-    /* Mobile override: fill the screen */
+    
+    /* ✅ Mobile override: zoom in image to fill screen (no white bars) */
     @media (max-width: 767px) {
       html, body {
         background-size: cover;
       }
+    
+      .form-wrapper {
+        top: 69%; /* ✅ place form after Gan Yavne on phones */
+      }
     }
-     /* Desktop only: form starts at 60% height */
+    
+    /* ✅ Desktop override: lower form and center it nicely */
     @media (min-width: 768px) {
       .form-wrapper {
         top: 60%;
-        transform: translateY(-10%); /* optional: moves it slightly upward */
-
+        transform: translateY(0%);
       }
     }
 
