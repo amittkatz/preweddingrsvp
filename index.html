@@ -8,14 +8,16 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
+      height: 100dvh; /* ✅ fixes iOS full screen issue */
+      width: 100vw;
       overflow: hidden;
       direction: rtl;
       font-family: 'Arial', sans-serif;
       text-align: center;
       background: url('prewedd.png') no-repeat center center;
-      background-size: contain; /* default for desktop */
+      background-size: cover; /* ✅ fills screen better on mobile */
       background-color: #ffffff;
+      background-attachment: fixed; /* ✅ prevents scroll effect */
     }
 
     /* Mobile override: fill the screen */
